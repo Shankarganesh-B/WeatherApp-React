@@ -1,25 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useContext } from 'react';
+import SearchBar from './components/SearchBar';
+import CityTimeBox from './components/CityTimeBox';
+import WeatherBox from './components/WeatherBox';
+import AdditionalBoxes from './components/AdditionalBoxes';
+import Footer from './components/Footer';
+import { WeatherContext } from './context/WeatherContext';
 
-function App() {
+const App = () => {
+  const { weatherData, currentLocation, hourlyData, loading, error } = useContext(WeatherContext);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="App p-2 m-1 rounded-md">
+      <SearchBar />
+      <CityTimeBox />
+      <WeatherBox weatherData={weatherData} />
+      <AdditionalBoxes weatherData={weatherData} />
+      <Footer/>
+      {error && <div className="error-message text-red-500 p-4">{error}</div>}
+      {loading && <div className="loading-message p-4">Loading...</div>}
+      
     </div>
   );
-}
+};
 
 export default App;
